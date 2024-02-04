@@ -42,7 +42,7 @@ export default function ProductDetail() {
   const params = useParams();
 
   const handlCart = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     dispatch(addToCartAsync({ ...product, quantity: 1, user: user.id }));
   };
 

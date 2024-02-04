@@ -2344,6 +2344,11 @@
       "email": "sonji@gmail.com",
       "password": "Sonji123@",
       "id": 2
+    },
+    {
+      "email": "kiran@gmail.com",
+      "password": "Kiran123@",
+      "id": 3
     }
   ],
   "cart": [
@@ -2365,7 +2370,7 @@
         "https://i.dummyjson.com/data/products/1/4.jpg",
         "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
       ],
-      "quantity": 1,
+      "quantity": 2,
       "user": 2
     },
     {
