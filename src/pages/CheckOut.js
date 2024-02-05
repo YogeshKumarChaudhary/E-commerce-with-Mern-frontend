@@ -12,12 +12,16 @@ import {
   selectLoggedInUser,
   updateUserAsync,
 } from "../features/auth/AuthSlice";
-import { createOrderAsync } from "../features/order/orderSlice";
+import {
+  createOrderAsync,
+  selectCurrentOrder,
+} from "../features/order/orderSlice";
 
 export default function CheckOut() {
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
   const user = useSelector(selectLoggedInUser);
+  const currentOrder = useSelector(selectCurrentOrder);
 
   const {
     register,
@@ -53,6 +57,7 @@ export default function CheckOut() {
       user,
       selectedAddresses,
       paymentMethod,
+      status: "pending",
     };
     dispatch(createOrderAsync(orderData));
   };
@@ -68,6 +73,12 @@ export default function CheckOut() {
   return (
     <>
       {!items.length && <Navigate to="/" replace={true}></Navigate>}
+      {currentOrder && (
+        <Navigate
+          to={`/order-success/${currentOrder?.id}`}
+          replace={true}
+        ></Navigate>
+      )}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
           <div className="lg:col-span-3">
