@@ -8,19 +8,17 @@ import {
   updateCartAsync,
 } from "../features/cart/cartSlice";
 import { useForm } from "react-hook-form";
-import {
-  selectLoggedInUser,
-  updateUserAsync,
-} from "../features/auth/AuthSlice";
+import { updateUserAsync } from "../features/auth/AuthSlice";
 import {
   createOrderAsync,
   selectCurrentOrder,
 } from "../features/order/orderSlice";
+import { selectUserInfo } from "../features/user/userSlice";
 
 export default function CheckOut() {
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
   const currentOrder = useSelector(selectCurrentOrder);
 
   const {
@@ -122,6 +120,9 @@ export default function CheckOut() {
                           id="name"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
+                        {errors.name && (
+                          <p className="text-red-600">{errors.name.message}</p>
+                        )}
                       </div>
                     </div>
 
@@ -141,6 +142,9 @@ export default function CheckOut() {
                           type="email"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
+                        {errors.email && (
+                          <p className="text-red-600">{errors.email.message}</p>
+                        )}
                       </div>
                     </div>
 
@@ -160,6 +164,9 @@ export default function CheckOut() {
                           type="tel"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
+                        {errors.phone && (
+                          <p className="text-red-600">{errors.phone.message}</p>
+                        )}
                       </div>
                     </div>
 
@@ -179,6 +186,11 @@ export default function CheckOut() {
                           id="street"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
+                        {errors.street && (
+                          <p className="text-red-600">
+                            {errors.street.message}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -198,6 +210,9 @@ export default function CheckOut() {
                           id="city"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
+                        {errors.city && (
+                          <p className="text-red-600">{errors.city.message}</p>
+                        )}
                       </div>
                     </div>
 
@@ -217,6 +232,9 @@ export default function CheckOut() {
                           id="state"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
+                        {errors.state && (
+                          <p className="text-red-600">{errors.state.message}</p>
+                        )}
                       </div>
                     </div>
 
@@ -236,6 +254,11 @@ export default function CheckOut() {
                           id="pinCode"
                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
+                        {errors.pinCode && (
+                          <p className="text-red-600">
+                            {errors.pinCode.message}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
