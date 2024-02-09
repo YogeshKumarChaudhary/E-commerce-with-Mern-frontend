@@ -28,3 +28,9 @@ export function checkUser(logInInfo) {
   });
 }
 
+
+export function signOut(userId) {
+  return new Promise(async (resolve) => {
+    resolve({ data:"success" });
+  });
+}
