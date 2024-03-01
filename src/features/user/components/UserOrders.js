@@ -10,6 +10,7 @@ export default function UserOrders() {
   const user = useSelector(selectUserInfo);
   const orders = useSelector(selectUserOrders);
   const dispatch = useDispatch();
+  console.log(user, orders);
 
   useEffect(() => {
     dispatch(fetchLoggedInUserOrdersAsync(user?.id));
@@ -18,6 +19,7 @@ export default function UserOrders() {
   return (
     <div>
       {orders &&
+        orders.length > 1 &&
         orders?.map((order, index) => (
           <div key={index}>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white mt-6">

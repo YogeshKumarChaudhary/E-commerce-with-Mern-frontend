@@ -49,11 +49,16 @@ export default function UserProfile() {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white mt-6">
       <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
         <h1 className="text-4xl my-5 font-bold tracking-tight text-gray-900">
-          Name : {user.name ? user.name : "Guest"}
+          Name : {user?.name ? user?.name : "Guest"}
         </h1>
         <h3 className="text-xl my-5 font-bold tracking-tight text-red-900">
-          Email : {user.email}
+          Email : {user?.email}
         </h3>
+        {user.role === "admin" && (
+          <h3 className="text-xl my-5 font-bold tracking-tight text-red-900">
+            Role : {user?.role}
+          </h3>
+        )}
       </div>
 
       <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
@@ -253,7 +258,7 @@ export default function UserProfile() {
           </form>
         ) : null}
         <p className="mt-0.5 text-sm text-gray-500">Your Addresses :</p>
-        {user.addresses.map((address, index) => (
+        {user?.addresses.map((address, index) => (
           <div>
             {selectedEditIndex === index ? (
               <form

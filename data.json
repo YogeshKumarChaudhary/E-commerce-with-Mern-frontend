@@ -2338,6 +2338,7 @@
     {
       "email": "sonji@gmail.com",
       "password": "Sonji123@",
+      "role": "user",
       "addresses": [
         {
           "name": "sonji Chaudhary",
@@ -2363,6 +2364,7 @@
     {
       "email": "kiran@gmail.com",
       "password": "Kiran123@",
+      "role": "user",
       "addresses": [
         {
           "name": "kiran",
@@ -2375,6 +2377,13 @@
         }
       ],
       "id": 3
+    },
+    {
+      "email": "admin@gmail.com",
+      "password": "Admin123@",
+      "addresses": [],
+      "role": "admin",
+      "id": 4
     }
   ],
   "cart": [],
