@@ -45,8 +45,13 @@ export default function ProductDetail() {
 
   const handlCart = (e) => {
     e.preventDefault();
-    if (cartItems.findIndex((item) => item.id === product.id) < 0) {
-      const newItem = { ...product, quantity: 1, user: user.id };
+    if (cartItems.findIndex((item) => item.productId === product.id) < 0) {
+      const newItem = {
+        ...product,
+        productId: product.id,
+        quantity: 1,
+        user: user.id,
+      };
       delete newItem["id"];
       dispatch(addToCartAsync(newItem));
     } else {
