@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectedProduct } from "../ProductSlice";
 import { useParams } from "react-router-dom";
 import { selectLoggedInUser } from "../../auth/AuthSlice";
-import { addToCartAsync } from "../../cart/cartSlice";
+import { addToCartAsync, selectItems } from "../../cart/cartSlice";
+import { discountedPrice } from "../../../app/constants";
 
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -39,13 +40,18 @@ export default function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   const product = useSelector(selectedProduct);
   const user = useSelector(selectLoggedInUser);
+  const cartItems = useSelector(selectItems);
   const params = useParams();
 
   const handlCart = (e) => {
     e.preventDefault();
-    const newItem = { ...product, quantity: 1, user: user.id };
-    delete newItem["id"];
-    dispatch(addToCartAsync(newItem));
+    if (cartItems.findIndex((item) => item.id === product.id) < 0) {
+      const newItem = { ...product, quantity: 1, user: user.id };
+      delete newItem["id"];
+      dispatch(addToCartAsync(newItem));
+    } else {
+      console.log("Alreday item added");
+    }
   };
 
   useEffect(() => {
@@ -140,8 +146,11 @@ export default function ProductDetail() {
             {/* Options */}
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl tracking-tight text-gray-900">
+              <p className="text-3xl line-through tracking-tight text-gray-400">
                 $ {product.price}
+              </p>
+              <p className="text-3xl tracking-tight text-gray-900">
+                $ {discountedPrice(product)}
               </p>
 
               {/* Reviews */}
