@@ -198,7 +198,10 @@ export default function AdminProductList() {
               {/* Product grid */}
               <div className="lg:col-span-3">
                 <div>
-                  <Link to="/admin/product-form" className="rounded-md mx-9 my-3 bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">
+                  <Link
+                    to="/admin/product-form"
+                    className="rounded-md mx-9 my-3 bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+                  >
                     Add New Product
                   </Link>
                 </div>
@@ -472,7 +475,7 @@ function ProductGrid({ products }) {
       <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
           {products.map((product) => (
-            <div key={product.id}> 
+            <div key={product.id}>
               <Link to={`/product-detail/${product.id}`}>
                 <div className="group relative border-solid border-2 p-2 border-gray-200">
                   <div className="min-h-60 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-60">
@@ -510,12 +513,20 @@ function ProductGrid({ products }) {
                       </p>
                     </div>
                   </div>
+                  {product.deleted && (
+                    <div>
+                      <p className="text-sm text-red-500">Product Deleted</p>
+                    </div>
+                  )}
                 </div>
               </Link>
-              <div>
-                <button className="rounded-md my-3 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              <div className=" mt-2">
+                <Link
+                  to={`/admin/product-form/edit/${product.id}`}
+                  className="rounded-md my-3 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
                   Edit Product
-                </button>
+                </Link>
               </div>
             </div>
           ))}

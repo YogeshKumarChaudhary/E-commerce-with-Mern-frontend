@@ -1,21 +1,65 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearSelectedProduct,
+  createProductAsync,
+  fetchProductByIdAsync,
   selectAllBrands,
   selectAllCategories,
+  selectedProduct,
+  updateProductAsync,
 } from "../../product/ProductSlice";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 
 const ProductForm = () => {
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
+    setValue,
+    reset,
     formState: { errors },
   } = useForm();
   const brands = useSelector(selectAllBrands);
   const categories = useSelector(selectAllCategories);
+  const params = useParams();
+  const selectedPro = useSelector(selectedProduct);
+
+  // FetchProductbyId
+  useEffect(() => {
+    if (params.id) {
+      dispatch(fetchProductByIdAsync(params.id));
+    } else {
+      dispatch(clearSelectedProduct());
+    }
+  }, [params.id]);
+
+  // setValue when selectedProduct
+  useEffect(() => {
+    if (selectedPro && params.id) {
+      // console.log(selectedPro);
+      setValue("title", selectedPro.title);
+      setValue("description", selectedPro.description);
+      setValue("brand", selectedPro.brand);
+      setValue("category", selectedPro.category);
+      setValue("price", selectedPro.price);
+      setValue("discountPercentage", selectedPro.discountPercentage);
+      setValue("stock", selectedPro.stock);
+      setValue("thumbnail", selectedPro.thumbnail);
+      setValue("image1", selectedPro.images[0]);
+      setValue("image2", selectedPro.images[1]);
+      setValue("image3", selectedPro.images[2]);
+    }
+  }, [selectedPro, params.id]);
+
+  // handlDelete
+  const handlDelete = () => {
+    const product = { ...selectedPro };
+    product.deleted = true;
+    dispatch(updateProductAsync(product));
+  };
   return (
     <div>
       <form
@@ -23,18 +67,32 @@ const ProductForm = () => {
         onSubmit={handleSubmit((data) => {
           // console.log(data);
           const product = { ...data };
+          // make images array
           product.images = [
             product.image1,
             product.image2,
             product.image3,
             product.thumbnail,
           ];
+          // convert string to number
+          product.price = +product.price;
+          product.discountPercentage = +product.discountPercentage;
+          product.stock = +product.stock;
           product.rating = 0;
           delete product["image1"];
           delete product["image2"];
           delete product["image3"];
 
           // console.log(product);
+          if (params.id) {
+            product.id = params.id;
+            product.rating = selectedPro.rating || 0;
+            dispatch(updateProductAsync(product));
+            reset();
+          } else {
+            dispatch(createProductAsync(product));
+            reset();
+          }
         })}
       >
         <div className="space-y-12 bg-white p-12">
@@ -156,6 +214,7 @@ const ProductForm = () => {
                   </div>
                 </div>
               </div>
+
               <div className="sm:col-span-2">
                 <label
                   htmlFor="discountPercentage"
@@ -178,6 +237,7 @@ const ProductForm = () => {
                   </div>
                 </div>
               </div>
+
               <div className="sm:col-span-2">
                 <label
                   htmlFor="stock"
@@ -366,13 +426,21 @@ const ProductForm = () => {
           </div>
         </div>
 
-        <div className="mt-6 flex items-center justify-end gap-x-6">
+        <div className="mt-6 flex items-center justify-end gap-x-5">
           <button
             type="button"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             Cancel
           </button>
+          {selectedPro && (
+            <button
+              onClick={handlDelete}
+              className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+            >
+              Delete
+            </button>
+          )}
           <button
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
