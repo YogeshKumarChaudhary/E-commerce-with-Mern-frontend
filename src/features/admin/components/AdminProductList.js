@@ -18,7 +18,6 @@ import { Link } from "react-router-dom";
 import {
   fetchAllBrandsAsync,
   fetchAllCategoriesAsync,
-  fetchAllProductsAsync,
   fetchAllProductsByFilterAsync,
   selectAllBrands,
   selectAllCategories,
