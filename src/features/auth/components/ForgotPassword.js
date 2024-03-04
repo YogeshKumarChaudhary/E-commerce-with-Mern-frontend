@@ -6,7 +6,6 @@ export default function ForgotPassword() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
   return (
