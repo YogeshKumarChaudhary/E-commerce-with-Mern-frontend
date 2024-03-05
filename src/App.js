@@ -142,7 +142,9 @@ function App() {
 
   useEffect(() => {
     if (user) {
+      // fetch all users cart item
       dispatch(fetchItemsByUserIdAsync(user.id));
+      // fetch loggedin user
       dispatch(fetchLoggedInUserAsync(user.id));
     }
   }, [user]);
